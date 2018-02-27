@@ -1,0 +1,19 @@
+{
+  "name": "chrome_huobi_plugins",
+  "version": "1.0.0",
+  "description": "Huobi 价格查看器 --- 本项目是基于huobi行情API开发的小插件，",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/awesomeric/huobiprice_plugins.git"
+  },
+  "author": "eric",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/awesomeric/huobiprice_plugins/issues"
+  },
+  "homepage": "https://github.com/awesomeric/huobiprice_plugins#readme"
+}

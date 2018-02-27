@@ -1,0 +1,41 @@
+body{
+  width: 300px;
+  height: 150px;
+  background: white;
+  }
+h3{
+  display: inline-block;
+  margin: 0;
+  vertical-align: 8px;
+  font-style: oblique;
+  margin: 0;
+}
+.price-tag{
+  color: black;
+  padding-left: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+.category{
+  color: #203de3;
+  font-size: 14px;
+  font-weight: bold;
+}
+.headline{
+  color: #a5a5c6;
+}
+.price-tag.in{
+  color: #2ada2a;
+}
+.price-tag.de{
+  color: red;
+}
+.author{
+  color:#acadcc;
+  position: fixed;
+  bottom: 5px;
+  right: 7px;
+  font-size: 12px;
+  font-style: oblique;
+  text-decoration: none;
+}
