@@ -16,13 +16,13 @@
   "browser_action": {
     "default_title": "price status",
     "default_icon": "image/icon.png",
-    "default_popup": "html/test.html"
+    "default_popup": "html/index.html"
   },
 
   // 引入一个脚本
   "content_scripts": [
     {
-      "js": ["script/test.js"],
+      "js": ["script/index.js"],
       // 在什么情况下使用该脚本
       "matches": [
         "http://*/*",

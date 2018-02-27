@@ -15,13 +15,15 @@ function httpRequest(url, callback){
 }
 
 function pricecompare(originNode,NewData){
-  originNode.classList.remove('in','de');
-  if(NewData >= originNode.innerText){
-    originNode.classList.add("in");
-  }else {
-    originNode.classList.add("de");
+  if(originNode){
+    originNode.classList.remove('in','de');
+    if(NewData >= originNode.innerText){
+      originNode.classList.add("in");
+    }else {
+      originNode.classList.add("de");
+    }
+    originNode.innerText = NewData;
   }
-  originNode.innerText = NewData;
 }
 
 window.setInterval(function(){

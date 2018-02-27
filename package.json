@@ -2,7 +2,7 @@
   "name": "chrome_huobi_plugins",
   "version": "1.0.0",
   "description": "Huobi 价格查看器 --- 本项目是基于huobi行情API开发的小插件，",
-  "main": "test.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
