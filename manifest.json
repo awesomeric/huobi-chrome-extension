@@ -1,45 +1,39 @@
 {
   "name": "火币价格查询器",
-  "version": "1.0",
+  "version": "2.0",
   "manifest_version": 2,
 
-  // 简单描述
-  "description": "查询火币交易场每日价格 powerby Erictang",
+  "description": "完全重构的2.0版本",
   "icons": {
-    /*"16": "image/icon16.png",
-    "48": "image/icon48.png"*/
+    "16":"image/icon48.png",
+    "48": "image/icon48.png"
   },
-  // 选择默认语言
-  /*"default_locale": "en",*/
+  /* "default_locale": "en", */
 
-  // 浏览器小图表部分
   "browser_action": {
-    "default_title": "price status",
-    "default_icon": "image/icon.png",
+    "default_title": "今天又跌了么📉",
+    "default_icon": "image/icon48.png",
     "default_popup": "html/index.html"
   },
-
-  // 引入一个脚本
+  "background": {
+    "scripts": ["script/jquery.min.js","script/particles.js"]
+  },
   "content_scripts": [
     {
-      "js": ["script/index.js"],
-      // 在什么情况下使用该脚本
+      "js": ["script/index.js","script/app.js"],
       "matches": [
-        "http://*/*",
-        "https://*/*"
+        "ftp://*/*"
       ],
-      // 什么情况下运行【文档加载开始】
       "run_at": "document_start",
       "persistent":false
     }
 
   ],
-  // 应用协议页面
   "permissions": [
     "http://*/*",
     "https://*/*",
     "tabs",
-    "activeTab"
+    "activeTab",
+    "storage"
   ]
-
 }

@@ -3,6 +3,8 @@ let HTnode = document.getElementById('htusdtprice');
 let BTCnode = document.getElementById('btcusdtprice');
 let ETHnode = document.getElementById('ethusdtprice');
 
+
+
 function httpRequest(url, callback){
     let xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);
@@ -26,23 +28,31 @@ function pricecompare(originNode,NewData){
   }
 }
 
-window.setInterval(function(){
-httpRequest("https://api.huobi.pro/market/history/kline?symbol=htusdt&period=5min&size=1", (origin)=>{
-  res = JSON.parse(origin);
-  if(1){
-    pricecompare(HTnode,res.data[0].close);
+function GetNowPrice(){
+  httpRequest("https://api.huobipro.com/market/history/kline?symbol=htusdt&period=5min&size=1", (origin)=>{
+    res = JSON.parse(origin);
+    if(1){
+      pricecompare(HTnode,res.data[0].close);
+  }
+  });
+  httpRequest("https://api.huobipro.com/market/history/kline?symbol=btcusdt&period=5min&size=1", (origin)=>{
+    res = JSON.parse(origin);
+    if(1){
+      pricecompare(BTCnode,res.data[0].close);
+  }
+  });
+  httpRequest("https://api.huobipro.com/market/history/kline?symbol=ethusdt&period=5min&size=1", (origin)=>{
+    res = JSON.parse(origin);
+    if(1){
+      pricecompare(ETHnode,res.data[0].close);
+  }
+  });
 }
-});
-httpRequest("https://api.huobi.pro/market/history/kline?symbol=btcusdt&period=5min&size=1", (origin)=>{
-  res = JSON.parse(origin);
-  if(1){
-    pricecompare(BTCnode,res.data[0].close);
-}
-});
-httpRequest("https://api.huobi.pro/market/history/kline?symbol=ethusdt&period=5min&size=1", (origin)=>{
-  res = JSON.parse(origin);
-  if(1){
-    pricecompare(ETHnode,res.data[0].close);
-}
-});
-},1500)
+
+GetNowPrice();
+
+let status = this.setInterval(function(){
+  GetNowPrice();
+},1500);
+
+

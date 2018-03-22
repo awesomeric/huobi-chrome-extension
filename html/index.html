@@ -2,29 +2,39 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>火币价格指南</title>
+    <title>火币价格指南2.0</title>
     <link href="app.css" rel="stylesheet">
+    <script type="text/javascript" src="../script/jquery.min.js"></script>
+    <script src="../script/particles.js"></script>
 </head>
 <body>
+  <div id="particles-dom">
+  </div>
   <div class="headsection">
     <img src="../image/logo.svg" height="25"/>
     <h3 class="headline">火币每日价格指南</h3>
   </div>
 <div class=showbox>
-<div class="price">
-<span class="category">BTC/USDT:</span><span class="price-tag in" id="btcusdtprice">加载中</span>
-</div>
-<div class="price">
-<span class="category">ETH/USDT:</span><span class="price-tag in" id="ethusdtprice">加载中</span>
-</div>
-<div class="price">
-<span class="category">HT/USDT:</span><span class="price-tag in"id="htusdtprice">加载中</span>
-</div>
-
+  <div class="add-section">
+    <input type="text" name = "coinname" placeholder="请输入需要查询的币种"/>
+    <button class="addbtn">添加</button>
+    <button class="clearbtn">清空</button>
+    <span class="warn">请输入你要查询的币名</span>
+  </div>
+  <ul class="pricelist">
+    <!-- <li class="item">
+      <div class="pricebox">
+        <span class="tag">BTC/USDT</span>
+        <span class="nowPrice">Loading</span>
+        <span class="delete"></span>
+      </div>
+    </li> -->
+  </ul>
 </div>
 <a class="author" herf="#">
-<img src="../image/bili23.gif" width="30"/>Erictang@2018
+Power by Erictang@2018
 </a>
 </body>
-<script src="../script/index.js"></script>
+<script src="../script/app.js"></script>
+<script src="../script/index2.js"></script>
 </html>
