@@ -71,6 +71,7 @@ h3{
   align-items: center;
   margin-top: 10px;
 }
+
 .nowPrice{
   color: #1890ff;
   font-size: 14px;
@@ -108,6 +109,7 @@ h3{
   width: 50%;
   display: inline-block;
 }
+
 .category{
   color: #203de3;
   font-size: 14px;
@@ -125,8 +127,8 @@ h3{
 .author{
   color:#acadcc;
   position: fixed;
-  bottom: 0;
   left: 35%;
   font-size: 12px;
+  bottom: 0;
   text-decoration: none;
 }

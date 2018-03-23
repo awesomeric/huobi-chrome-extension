@@ -3,7 +3,7 @@
   "version": "2.0",
   "manifest_version": 2,
 
-  "description": "完全重构的2.0版本",
+  "description": "在这里可以查询火币场内实时价格",
   "icons": {
     "16":"image/icon48.png",
     "48": "image/icon48.png"

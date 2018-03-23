@@ -8,6 +8,7 @@ class PriceDetector {
         this.initPrice();
       }else {
         this.PriceArr = ["btcusdt","htusdt"];
+        chrome.storage.local.set({taskList:this.PriceArr});
         this.initPrice();
       }
     })
@@ -75,6 +76,12 @@ class PriceDetector {
     let self = this;
     $('.clearbtn').on('click',()=>{
       this.clear();
+    })
+    $("input[name='coinname']").keydown(function(e){
+      if(e.keyCode == 13)
+      {
+        $(".addbtn").trigger("click");
+      }
     })
     $('.addbtn').on('click',()=>{
       let userinput = $("input[name='coinname']").val();
