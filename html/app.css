@@ -124,6 +124,9 @@ h3{
   float: right;
   color: red;
 }
+.footer{
+  margin-top: 20px;
+}
 .author{
   color:#acadcc;
   position: fixed;
