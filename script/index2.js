@@ -45,6 +45,7 @@ class PriceDetector {
           period:'5min',
           size:1
         },
+        timeout:3000,
         success:function(data){
           let res = JSON.parse(data);
           let PriceNode = $('.nowPrice').eq(index);
@@ -52,6 +53,12 @@ class PriceDetector {
           let lowestPrice = res.data[0].low;
           self.pricecompare(lowestPrice,nowPrice);
           $('.nowPrice').eq(index).text(res.data[0].close);
+        },
+        complete:function(XMLHttpRequest, Status){
+          if(Status == 'timeout'){
+            $('.warn').text('火币接口可能掉了：）').fadeIn(1000);
+            clearInterval(self.time)
+          }
         }
       })
     })
@@ -154,12 +161,19 @@ class PriceDetector {
             period:'5min',
             size:1
           },
+          timeout:3000,
           success:function(data){
             let res = JSON.parse(data);
             let PriceNode = $('.nowPrice').eq(index);
             let nowPrice = res.data[0].close;
             self.pricecompare(PriceNode,nowPrice);
             $('.nowPrice').eq(index).text(res.data[0].close);
+          },
+          complete:function(XMLHttpRequest, Status){
+            if(Status == 'timeout'){
+              $('.warn').text('火币接口可能掉了：）').fadeIn(1000);
+              clearInterval(self.time);
+            }
           }
         })
       })
