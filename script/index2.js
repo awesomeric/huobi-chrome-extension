@@ -2,52 +2,64 @@
 class PriceDetector {
   constructor() {
     // chrome.storage.local.set({taskList:["btcusdt","htusdt"]});
-    chrome.storage.local.get('taskList', (res)=> {
-      if(res.taskList){
+    let time = null;
+    this.getChromeLS().then(res=>{
+      if(res){
         this.PriceArr = res.taskList;
-        this.initPrice();
       }else {
-        this.PriceArr = ["btcusdt","htusdt"];
-        chrome.storage.local.set({taskList:this.PriceArr});
-        this.initPrice();
+          this.PriceArr = ["btcusdt","htusdt"];
+          this.setChromeLS();
+          chrome.storage.local.set({taskList:this.PriceArr});
       }
+      this.initPrice();
+    })
+  }
+  getChromeLS(){
+    return new Promise((resolve,reject)=>{
+      chrome.storage.local.get('taskList', (res)=> {
+        resolve(res.taskList)
+      });
+    });
+  }
+
+  createPriceDom(){
+    this.getChromeLS().then(res=>{
+      //create domlist
+      res.map((item,index)=>{
+        let Dom = `<li class="item"><div class="pricebox"><span class="tag">${item.toUpperCase()}</span><span class="nowPrice">Loading</span><span class="icon-de"></span><span class="icon-in"></span></div></li>`
+        $('.pricelist').append(Dom);
+      });
+      this.time = this.intervalPrice(res);
     })
   }
 
-  getPriceInfo(){
+  intervalPrice(arr){
     let self = this;
-    chrome.storage.local.get('taskList', function(res) {
-          res.taskList.map((item,index)=>{
-            let Dom = `<li class="item"><div class="pricebox"><span class="tag">${item.toUpperCase()}</span><span class="nowPrice">Loading</span><span class="icon-de"></span><span class="icon-in"></span></div></li>`
-            $('.pricelist').append(Dom);
-          });
-          let time = setInterval(()=>{
-          res.taskList.map((item,index)=>{
-            $.ajax({
-              type: "GET",
-              url: "https://api.huobipro.com/market/history/kline",
-              data: {
-                symbol:item,
-                period:'5min',
-                size:1
-              },
-              success:function(data){
-                let res = JSON.parse(data);
-                let PriceNode = $('.nowPrice').eq(index);
-                let nowPrice = res.data[0].close;
-                self.pricecompare(PriceNode,nowPrice);
-                $('.nowPrice').eq(index).text(res.data[0].close);
-              }
-            })
-          })
-        },2000)
+    return setInterval(()=>{
+    arr.map((item,index)=>{
+      $.ajax({
+        type: "GET",
+        url: "https://api.huobipro.com/market/history/kline",
+        data: {
+          symbol:item,
+          period:'5min',
+          size:1
+        },
+        success:function(data){
+          let res = JSON.parse(data);
+          let PriceNode = $('.nowPrice').eq(index);
+          let nowPrice = res.data[0].close;
+          let lowestPrice = res.data[0].low;
+          self.pricecompare(lowestPrice,nowPrice);
+          $('.nowPrice').eq(index).text(res.data[0].close);
+        }
       })
-  }
+    })
+  },2000)
+ }
 
-  pricecompare(originNode,NewData){
-    if(originNode){
-      originNode.removeClass('in de');
-      if(NewData >= originNode.text()){
+  pricecompare(lowest,NewData){
+      if(NewData >= lowest){
         //increase price
         $(".icon-de").hide();
         $(".icon-in").fadeIn(500);
@@ -58,43 +70,47 @@ class PriceDetector {
         $(".icon-de").fadeIn(500);
         // originNode.removeClass('in de').addClass("de");
       }
-    }
   }
 
 
 
   addDom(item){
-    let Dom = `<li class="item"><div class="pricebox"><span class="tag">${item.toUpperCase()}</span><span class="nowPrice">重启后加载</span></div></li>`
+    let Dom = `<li class="item"><div class="pricebox"><span class="tag">${item.toUpperCase()}</span><span class="nowPrice">获取数据中</span></div></li>`
     $('.pricelist').append(Dom);
+    clearInterval(this.time);
+    this.getChromeLS().then(res=>{
+        this.time = this.intervalPrice(res);
+    })
   }
   clear(){
     chrome.storage.local.set({taskList:["btcusdt","htusdt"]});
     $('.warn').text('重启后生效').fadeIn(1000);
   }
   init(){
-    this.getPriceInfo();
     let self = this;
+    this.createPriceDom();
     $('.clearbtn').on('click',()=>{
       this.clear();
-    })
+    });
+
     $("input[name='coinname']").keydown(function(e){
       if(e.keyCode == 13)
       {
         $(".addbtn").trigger("click");
       }
-    })
+    });
+
     $('.addbtn').on('click',()=>{
       let userinput = $("input[name='coinname']").val();
       if(!userinput){
         $('.warn').fadeIn(1000);
         return ;
       }else {
-        chrome.storage.local.get('taskList', function(res) {
-          this.PriceArr = res.taskList;
+        this.getChromeLS().then(res=>{
+          this.PriceArr = res;
           for(let item of this.PriceArr){
-            console.log(item);
             if(item == userinput){
-            $('.warn').text('不可重复添加').fadeIn(1000);
+            $('.warn').text('不可重复添加!').fadeIn(1000);
             return false;
            }
          }
@@ -114,7 +130,6 @@ class PriceDetector {
            chrome.storage.local.set({taskList:taskList});
            self.addDom(userinput);
            chrome.storage.local.get('taskList', function(res){
-               console.log('查看当前结果',res.taskList);
              });
          });
          },
@@ -123,32 +138,33 @@ class PriceDetector {
            return false;
          }
        })
-        })
+      })
       }
     })
   }
   initPrice(){
+    console.log('initPrice');
     let self = this;
-    chrome.storage.local.get('taskList', function(res) {
-          res.taskList.map((item,index)=>{
-            $.ajax({
-              type: "GET",
-              url: "https://api.huobipro.com/market/history/kline",
-              data: {
-                symbol:item,
-                period:'5min',
-                size:1
-              },
-              success:function(data){
-                let res = JSON.parse(data);
-                let PriceNode = $('.nowPrice').eq(index);
-                let nowPrice = res.data[0].close;
-                self.pricecompare(PriceNode,nowPrice);
-                $('.nowPrice').eq(index).text(res.data[0].close);
-              }
-            })
-          })
+    this.getChromeLS().then(res=>{
+      res.map((item,index)=>{
+        $.ajax({
+          type: "GET",
+          url: "https://api.huobipro.com/market/history/kline",
+          data: {
+            symbol:item,
+            period:'5min',
+            size:1
+          },
+          success:function(data){
+            let res = JSON.parse(data);
+            let PriceNode = $('.nowPrice').eq(index);
+            let nowPrice = res.data[0].close;
+            self.pricecompare(PriceNode,nowPrice);
+            $('.nowPrice').eq(index).text(res.data[0].close);
+          }
         })
+      })
+    })
   }
 }
 
