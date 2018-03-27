@@ -143,7 +143,6 @@ class PriceDetector {
     })
   }
   initPrice(){
-    console.log('initPrice');
     let self = this;
     this.getChromeLS().then(res=>{
       res.map((item,index)=>{
