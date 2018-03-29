@@ -76,6 +76,12 @@ h3{
   color: #1890ff;
   font-size: 14px;
   font-weight: bold;
+  margin-left: -80px;
+}
+.openprice{
+  color: #17558f;
+  font-size: 14px;
+  font-weight: bold;
 }
 .nowPrice.in{
   color: #369d36;
@@ -108,6 +114,19 @@ h3{
   margin-left: 20%;
   width: 50%;
   display: inline-block;
+}
+.loading{
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: url('../image/loading.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  animation: rotate 1s linear infinite;
+}
+@keyframes rotate{
+  from{transform: rotate(0deg)}
+  to  {transform: rotate(359deg)}
 }
 
 .category{

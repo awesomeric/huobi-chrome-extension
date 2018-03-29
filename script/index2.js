@@ -26,7 +26,17 @@ class PriceDetector {
     this.getChromeLS().then(res=>{
       //create domlist
       res.map((item,index)=>{
-        let Dom = `<li class="item"><div class="pricebox"><span class="tag">${item.toUpperCase()}</span><span class="nowPrice">Loading</span><span class="icon-de"></span><span class="icon-in"></span></div></li>`
+        let Dom = `<li class="item">
+        <div class="pricebox">
+        <span class="tag">${item.toUpperCase()}</span>
+        <span class="nowPrice">
+        <i class="loading"/>
+        </span>
+        <span class="icon-de"></span>
+        <span class="icon-in"></span>
+        <span class="openprice"></span>
+        </div>
+        </li>`
         $('.pricelist').append(Dom);
       });
       this.time = this.intervalPrice(res);
@@ -49,10 +59,11 @@ class PriceDetector {
         success:function(data){
           let res = JSON.parse(data);
           let PriceNode = $('.nowPrice').eq(index);
-          let nowPrice = res.data[0].close;
-          let lowestPrice = res.data[0].low;
-          self.pricecompare(lowestPrice,nowPrice);
-          $('.nowPrice').eq(index).text(res.data[0].close);
+          let closePrice = res.data[0].close;
+          let openPrice = res.data[0].low;
+          self.pricecompare(closePrice,openPrice);
+          $('.nowPrice').eq(index).text(closePrice);
+          $('.openprice').eq(index).text(openPrice);
         },
         complete:function(XMLHttpRequest, Status){
           if(Status == 'timeout'){
@@ -65,24 +76,8 @@ class PriceDetector {
   },2000)
  }
 
-  pricecompare(lowest,NewData){
-      if(NewData >= lowest){
-        //increase price
-        $(".icon-de").hide();
-        $(".icon-in").fadeIn(500);
-        // originNode.removeClass('in de').addClass("in");
-      }else {
-        //decrease price
-        $(".icon-in").hide();
-        $(".icon-de").fadeIn(500);
-        // originNode.removeClass('in de').addClass("de");
-      }
-  }
-
-
-
   addDom(item){
-    let Dom = `<li class="item"><div class="pricebox"><span class="tag">${item.toUpperCase()}</span><span class="nowPrice">获取数据中</span></div></li>`
+    let Dom = `<li class="item"><div class="pricebox"><span class="tag">${item.toUpperCase()}</span><span class="nowPrice"><i class="loading"></i></span></div></li>`
     $('.pricelist').append(Dom);
     clearInterval(this.time);
     this.getChromeLS().then(res=>{
@@ -165,9 +160,11 @@ class PriceDetector {
           success:function(data){
             let res = JSON.parse(data);
             let PriceNode = $('.nowPrice').eq(index);
-            let nowPrice = res.data[0].close;
-            self.pricecompare(PriceNode,nowPrice);
-            $('.nowPrice').eq(index).text(res.data[0].close);
+            let closePrice = res.data[0].close;
+            let openPrice = res.data[0].low;
+            self.pricecompare(closePrice,openPrice);
+            $('.nowPrice').eq(index).text(closePrice);
+            $('.openprice').eq(index).text(openPrice);
           },
           complete:function(XMLHttpRequest, Status){
             if(Status == 'timeout'){
@@ -178,6 +175,19 @@ class PriceDetector {
         })
       })
     })
+  }
+  pricecompare(closePrice,openPrice){
+      if(closePrice >= openPrice){
+        //increase price
+        $(".icon-de").hide();
+        $(".icon-in").fadeIn(500);
+        // originNode.removeClass('in de').addClass("in");
+      }else {
+        //decrease price
+        $(".icon-in").hide();
+        $(".icon-de").fadeIn(500);
+        // originNode.removeClass('in de').addClass("de");
+      }
   }
 }
 
