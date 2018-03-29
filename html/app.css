@@ -154,3 +154,26 @@ h3{
   bottom: 0;
   text-decoration: none;
 }
+.no-network{
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top:0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.52);
+  text-align: center;
+}
+.cry{
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  margin-top: 10%;
+  background: url('../image/cry.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+.sorry{
+  color: white;
+  font-size: 16px;
+}

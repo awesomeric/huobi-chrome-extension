@@ -67,8 +67,8 @@ class PriceDetector {
         },
         complete:function(XMLHttpRequest, Status){
           if(Status == 'timeout'){
-            $('.warn').text('火币接口可能掉了：）').fadeIn(1000);
             clearInterval(self.time)
+            $('.no-network').fadeIn(1500);
           }
         }
       })
@@ -168,8 +168,8 @@ class PriceDetector {
           },
           complete:function(XMLHttpRequest, Status){
             if(Status == 'timeout'){
-              $('.warn').text('火币接口可能掉了：）').fadeIn(1000);
               clearInterval(self.time);
+              $('.no-network').fadeIn(1500);
             }
           }
         })
