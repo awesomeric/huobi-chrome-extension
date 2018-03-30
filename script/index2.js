@@ -12,6 +12,7 @@ class PriceDetector {
           chrome.storage.local.set({taskList:this.PriceArr});
       }
       this.initPrice();
+      this.init();
     })
   }
   getChromeLS(){
@@ -76,8 +77,19 @@ class PriceDetector {
   },2000)
  }
 
+
   addDom(item){
-    let Dom = `<li class="item"><div class="pricebox"><span class="tag">${item.toUpperCase()}</span><span class="nowPrice"><i class="loading"></i></span></div></li>`
+    let Dom = `<li class="item">
+                <div class="pricebox">
+                <span class="tag">${item.toUpperCase()}</span>
+                <span class="nowPrice">
+                <i class="loading"/>
+                </span>
+                <span class="icon-de"></span>
+                <span class="icon-in"></span>
+                <span class="openprice"></span>
+                </div>
+                </li>`;
     $('.pricelist').append(Dom);
     clearInterval(this.time);
     this.getChromeLS().then(res=>{
@@ -191,5 +203,4 @@ class PriceDetector {
   }
 }
 
-let price = new PriceDetector();
-price.init();
+new PriceDetector();

@@ -1,6 +1,6 @@
 {
   "name": "火币价格查询器",
-  "version": "2.0",
+  "version": "2.1",
   "manifest_version": 2,
 
   "description": "在这里可以查询火币场内实时价格",
@@ -8,10 +8,9 @@
     "16":"image/icon48.png",
     "48": "image/icon48.png"
   },
-  /* "default_locale": "en", */
 
   "browser_action": {
-    "default_title": "今天又跌了么📉",
+    "default_title": "今天又涨了么",
     "default_icon": "image/icon48.png",
     "default_popup": "html/index.html"
   },

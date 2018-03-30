@@ -35,6 +35,8 @@ h3{
 #particles-dom{
   z-index: -1;
   position: absolute;
+  width: 100%;
+  height: 100%;
 }
 .add-section input{
   width: 150px;
