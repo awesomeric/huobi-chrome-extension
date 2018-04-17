@@ -8,7 +8,6 @@ class PriceDetector {
         this.PriceArr = res.taskList;
       }else {
           this.PriceArr = ["btcusdt","htusdt"];
-          this.setChromeLS();
           chrome.storage.local.set({taskList:this.PriceArr});
       }
       this.initPrice();
